@@ -8,11 +8,14 @@ const Post = require("./models/post");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
 const fs = require("fs");
+const path = require("path");
+
+const upload = multer({ dest: "uploads/" });
 
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serve static files from the 'uploads' directory
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -21,14 +24,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 const secretKey = process.env.SECRET_KEY;
 
-// mongoose.connect(
-//   "mongodb+srv://erikhakizimana03:WWe2ZdMIjwFRiKEz@cluster0.zdxun5x.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-// );
-
-// const secretKey =
-//   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
-
-// Middleware to protect routes that require authentication
 function verifyToken(req, res, next) {
   const token = req.headers.authorization;
   if (!token) {
@@ -43,7 +38,6 @@ function verifyToken(req, res, next) {
   });
 }
 
-// Route to register a new user
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -57,7 +51,6 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// Route to log in an existing user and generate JWT token
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -81,12 +74,10 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Protected route example
 app.get("/protected", verifyToken, (req, res) => {
   res.json({ message: "Protected route" });
 });
 
-// Welcome route
 app.get("/", (req, res) => {
   res.send("Welcome to the home page");
 });
@@ -104,30 +95,40 @@ app.get("/profile", async (req, res) => {
 });
 
 app.post("/logout", (req, res) => {
-  // res.cookie("token", "").json({ message: "Logout successful" });
   res.json({ message: "Logout successful" });
 });
 
 app.post("/post", upload.single("files"), async (req, res) => {
-  const { originalname, path } = req.file;
-  const parts = originalname.split(".");
-  const ext = parts[parts.length - 1];
-  fs.renameSync(req.file.path, req.file.path + "." + ext);
-  const newPath = req.file.path + "." + ext;
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
 
-  const { title, summary, content } = req.body;
-  const postDoc = await Post.create({
-    title,
-    summary,
-    content,
-    imagePath: newPath,
-  });
+    const { originalname, path } = req.file;
+    const parts = originalname.split(".");
+    const ext = parts[parts.length - 1];
+    const newPath = `${path}.${ext}`;
 
-  res.json(postDoc);
+    fs.renameSync(path, newPath);
+
+    const { title, summary, content, author } = req.body;
+    const postDoc = await Post.create({
+      title,
+      summary,
+      content,
+      imagePath: newPath,
+      author,
+    });
+
+    res.json(postDoc);
+  } catch (error) {
+    console.error("Error creating post:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 app.get("/post", async (req, res) => {
-  const posts = await Post.find();
+  const posts = await Post.find().populate("author", "username");
   res.json(posts);
 });
 

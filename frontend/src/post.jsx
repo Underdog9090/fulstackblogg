@@ -1,59 +1,39 @@
-import React from "react";
-import { format, isValid, toDate } from "date-fns";
+import React, { useEffect, useState } from "react";
+import { format } from "date-fns";
 
-export default function Post({
-  title,
-  summary,
-  content,
-  createdAt,
-  imagePath,
-}) {
-  console.log("createdAt:", createdAt); // Log the createdAt prop
+export default function PostList() {
+  const [posts, setPosts] = useState([]);
 
-  const dateObject = toDate(createdAt);
-
-  // Check if the dateObject is valid
-  if (!isValid(dateObject)) {
-    console.error("Invalid createdAt value:", createdAt);
-    return <div>Error: Invalid date</div>;
-  }
+  useEffect(() => {
+    fetch("http://localhost:4000/post")
+      .then((response) => response.json())
+      .then((data) => setPosts(data));
+  }, []);
 
   return (
-    <div>
-      <div className="content">
-        {/* <img src={imagePath} alt="hero" /> */}
-        <img
-          src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="hero"
-        />
-        <h2>{title}</h2>
-        <p className="info">
-          <a className="author">Erik </a>
-          <time>{format(new Date(createdAt), "MMM d, yyyy HH:mm")}</time>
-        </p>
-        <p>{summary}</p>
-      </div>{" "}
-      {/* //Next post */}
-      <div className="content">
-        {/* <img src={imagePath} alt="hero" /> */}
-        <img src="https://images.unsplash.com/photo-1471922694854-ff1b63b20054?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
-        <h2>{title}</h2>
-        <p className="info">
-          <a className="author">Jones </a>
-          <time>{format(new Date(createdAt), "MMM d, yyyy HH:mm")}</time>
-        </p>
-        <p>{summary}</p>
-      </div>{" "}
-      <div className="content">
-        {/* <img src={imagePath} alt="hero" /> */}
-        <img src="https://images.unsplash.com/photo-1532983330958-4b32bbe9bb0e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
-        <h2>{title}</h2>
-        <p className="info">
-          <a className="author">Gemma </a>
-          <time>{format(new Date(createdAt), "MMM d, yyyy HH:mm")}</time>
-        </p>
-        <p>{summary}</p>
-      </div>
+    <div className="post-list">
+      <h1>Posts</h1>
+      {posts.map((post) => (
+        <div key={post._id} className="post">
+          <h2>{post.title}</h2>
+          <p>{post.summary}</p>
+          {post.imagePath && (
+            <img
+              src={`http://localhost:4000/${post.imagePath}`}
+              alt={post.title}
+              className="post-image"
+            />
+          )}
+          <p className="info">
+            <span className="author">{post.author?.username}</span>
+            <time>{format(new Date(post.createdAt), "MMM d, yyyy HH:mm")}</time>
+          </p>
+          <div
+            dangerouslySetInnerHTML={{ __html: post.content }}
+            className="post-content"
+          />
+        </div>
+      ))}
     </div>
   );
 }
