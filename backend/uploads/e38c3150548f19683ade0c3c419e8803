@@ -1,0 +1,149 @@
+[
+    {
+      "title": "The Catcher in the Rye",
+      "author": "J.D. Salinger",
+      "publicationYear": "1951",
+      "genres": ["Fiction", "Coming of Age"],
+      "ratings": ["4.5", "4.8", "4.2"]
+    },
+    {
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "publicationYear": "1960",
+      "genres": ["Fiction", "Drama"],
+      "ratings": ["4.7", "4.9", "4.5"]
+    },
+    {
+      "title": "1984",
+      "author": "George Orwell",
+      "publicationYear": "1949",
+      "genres": ["Dystopian", "Political Fiction"],
+      "ratings": ["4.6", "4.4", "4.9"]
+    },
+    {
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "publicationYear": "1925",
+      "genres": ["Classic", "Romance"],
+      "ratings": ["4.8", "4.7", "4.3"]
+    },
+    {
+      "title": "Brave New World",
+      "author": "Aldous Huxley",
+      "publicationYear": "1932",
+      "genres": ["Dystopian", "Science Fiction"],
+      "ratings": ["4.5", "4.2", "4.6"]
+    },
+    {
+      "title": "The Lord of the Rings",
+      "author": "J.R.R. Tolkien",
+      "publicationYear": "1954",
+      "genres": ["Fantasy", "Adventure"],
+      "ratings": ["4.9", "4.8", "4.7"]
+    },
+    {
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "publicationYear": "1813",
+      "genres": ["Classic", "Romance"],
+      "ratings": ["4.7", "4.6", "4.5"]
+    },
+    {
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien",
+      "publicationYear": "1937",
+      "genres": ["Fantasy", "Adventure"],
+      "ratings": ["4.6", "4.9", "4.4"]
+    },
+    {
+      "title": "The Shining",
+      "author": "Stephen King",
+      "publicationYear": "1977",
+      "genres": ["Horror", "Thriller"],
+      "ratings": ["4.5", "4.3", "4.8"]
+    },
+    {
+      "title": "Harry Potter and the Philosopher's Stone",
+      "author": "J.K. Rowling",
+      "publicationYear": "1997",
+      "genres": ["Fantasy", "Young Adult"],
+      "ratings": ["4.8", "4.9", "4.7"]
+    },
+    {
+      "title": "The Hunger Games",
+      "author": "Suzanne Collins",
+      "publicationYear": "2008",
+      "genres": ["Dystopian", "Science Fiction"],
+      "ratings": ["4.6", "4.5", "4.2"]
+    },
+    {
+      "title": "The Road",
+      "author": "Cormac McCarthy",
+      "publicationYear": "2006",
+      "genres": ["Post-Apocalyptic", "Dystopian"],
+      "ratings": ["4.2", "4.4", "4.1"]
+    },
+    {
+      "title": "The Alchemist",
+      "author": "Paulo Coelho",
+      "publicationYear": "1988",
+      "genres": ["Fiction", "Philosophical"],
+      "ratings": ["4.7", "4.5", "4.9"]
+    },
+    {
+      "title": "One Hundred Years of Solitude",
+      "author": "Gabriel Garcia Marquez",
+      "publicationYear": "1967",
+      "genres": ["Magical Realism", "Historical Fiction"],
+      "ratings": ["4.6", "4.8", "4.7"]
+    },
+    {
+      "title": "The Odyssey",
+      "author": "Homer",
+      "publicationYear": "-800",
+      "genres": ["Epic", "Adventure"],
+      "ratings": ["4.3", "4.5", "4.2"]
+    },
+    {
+      "title": "Frankenstein",
+      "author": "Mary Shelley",
+      "publicationYear": "1818",
+      "genres": ["Gothic", "Science Fiction"],
+      "ratings": ["4.4", "4.2", "4.6"]
+    }
+]
+  // import prompt from "prompt-sync";
+
+// const p = prompt();
+// console.log("1. View all movies: ");
+// console.log("2. Add a new movie");
+// console.log("3. Update a movie (Update title, director or release date)");
+// console.log("4. Delete a movie");
+// console.log("5. Exit");
+
+// let runApp = true;
+
+// while (runApp) {
+//   let input = p("Make a choice by entering a number: ");
+//   if (input == "1") {
+//     console.log("Here is a list of all the movies:");
+//     // List med anvÃ¤dnare
+//   } else if (input == "2") {
+//     console.log("Enter the data of the new movie");
+//     let title = p(" Title: ");
+//     let director = p("Director: ");
+//     let genres = p("Genres: ");
+//     let releaseYear = p("Release Year: ");
+//     let Casting = p("Casting: ");
+//     // Resten av uppgifterna...
+//   } else if (input == "3") {
+//     let userToEdit = p("Choose a user to movie: ");
+//     console.log("You have chosen user: " + userToEdit);
+//   } else if (input == "5") {
+//     runApp = false;
+//   } else {
+//     console.log("Please enter a number between 1 and 5.");
+//   }
+// }
+
+// mongoose.connection.close();
